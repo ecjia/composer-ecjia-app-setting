@@ -77,7 +77,7 @@ class SettingItems extends RC_Object
     {
         $parent_id = $this->getParentId($group);
 
-        $item_list = RC_DB::table('shop_config')
+        $item_list = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')
             ->where('parent_id', $parent_id)
             ->where('type', '<>', 'hidden')
             ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
@@ -87,7 +87,7 @@ class SettingItems extends RC_Object
 
     protected function getParentId($code)
     {
-        $id = RC_DB::table('shop_config')->where('parent_id', 0)->where('type', 'group')->where('code', $code)->value('id');
+        $id = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->where('parent_id', 0)->where('type', 'group')->where('code', $code)->value('id');
         return $id;
     }
 

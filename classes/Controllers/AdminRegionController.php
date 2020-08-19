@@ -62,10 +62,10 @@ class AdminRegionController extends EcjiaAdminController
 
         $id = isset($_GET['id']) ? trim($_GET['id']) : 'CN';
 
-        $region_arr = RC_DB::table('regions')->where('parent_id', $id)->get();
+        $region_arr = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('parent_id', $id)->get();
 
         if ($id != 'CN') {
-            $p_info = RC_DB::table('regions')->where('region_id', $id)->first();
+            $p_info = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_id', $id)->first();
         }
 
         if ($id == 'CN') {
@@ -98,7 +98,7 @@ class AdminRegionController extends EcjiaAdminController
 
         $str_last = '';
         if ($region_type != 1) {
-            $current_name = RC_DB::table('regions')->whereIn('region_id', $re_ids)->lists('region_name');
+            $current_name = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->whereIn('region_id', $re_ids)->lists('region_name');
             if (count($current_name >= 2)) {
                 $end = array_slice($current_name,-1,1);
                 $current_name_new = array_diff($current_name, $end);
@@ -160,7 +160,7 @@ class AdminRegionController extends EcjiaAdminController
         }
 
         /* 查看地区码是否重复 */
-        $is_only = RC_DB::table('regions')->where('region_id', $region_id)->where('region_type', $region_type)->count();
+        $is_only = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_id', $region_id)->where('region_type', $region_type)->count();
         if ($is_only) {
             return $this->showmessage(__('抱歉，当前级已经有相同的地区码存在！', 'setting'),ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         } else {
@@ -173,7 +173,7 @@ class AdminRegionController extends EcjiaAdminController
                 'country'	  => 'CN'
             );
 
-            $region_id = RC_DB::table('regions')->insert($data);
+            $region_id = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->insert($data);
             if ($region_id) {
                 $region_href = RC_Uri::url('setting/admin_region/drop_area',array('id' => $region_id));
                 //日志
@@ -213,7 +213,7 @@ class AdminRegionController extends EcjiaAdminController
             return $this->showmessage(__('区域名称不能为空！', 'setting'), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
         }
 
-        $old = RC_DB::table('regions')->select('region_name','parent_id')->where('region_id', $region_id)->first();
+        $old = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->select('region_name','parent_id')->where('region_id', $region_id)->first();
         $parent_id = $old['parent_id'];
         $old_name  = $old['region_name'];
 
@@ -221,7 +221,7 @@ class AdminRegionController extends EcjiaAdminController
             'region_name' => $region_name,
             'index_letter'=> $index_letter,
         );
-        $region_id = RC_DB::table('regions')->where('region_id', $region_id)->update($data);
+        $region_id = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_id', $region_id)->update($data);
 
         if ($region_id) {
             //日志
@@ -251,7 +251,7 @@ class AdminRegionController extends EcjiaAdminController
 
         $id = trim($_GET['id']);
 
-        $region = RC_DB::table('regions')->where('region_id', $id)->first();
+        $region = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_id', $id)->first();
         $regionname      = $region['region_name'];
 
         //含id自己
@@ -261,7 +261,7 @@ class AdminRegionController extends EcjiaAdminController
             $delete_region = array_merge(array($id), $parent_ids);
         }
 
-        RC_DB::table('regions')->whereIn('region_id', $delete_region)->delete();
+        RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->whereIn('region_id', $delete_region)->delete();
         //日志
         ecjia_admin::admin_log(addslashes($regionname), 'remove', 'area');
         //更新地区版本
@@ -282,9 +282,9 @@ class AdminRegionController extends EcjiaAdminController
     {
         if($parent_id){
             if(is_array($parent_id)){
-                $data = RC_DB::table('regions')->whereIn('parent_id', $parent_id)->lists('region_id');
+                $data = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->whereIn('parent_id', $parent_id)->lists('region_id');
             }else{
-                $data = RC_DB::table('regions')->where('parent_id', $parent_id)->lists('region_id');
+                $data = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('parent_id', $parent_id)->lists('region_id');
             }
 
             if(!empty($data)){
@@ -350,11 +350,11 @@ class AdminRegionController extends EcjiaAdminController
                 //首次先清空本地地区表
                 $first_page = intval($_GET['page']);
                 if ($first_page == 0) {
-                    RC_DB::table('regions')->where('country', 'CN')->delete();
+                    RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('country', 'CN')->delete();
                 }
 
                 //批量插入
-                RC_DB::table('regions')->insert($update_data);
+                RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->insert($update_data);
             }
         }
 

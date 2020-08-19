@@ -66,7 +66,7 @@ class list_module extends api_admin implements api_interface
 		$size = empty($size) ? 15 : $size;
 		$page = empty($page) ? 1 : $page;
 		
-		$db = RC_DB::table('merchants_region_area');
+		$db = RC_DB::connection(config('cashier.database_connection', 'default'))->table('merchants_region_area');
 		$count = $db->select('ra_id')->count();
 		$page_row = new ecjia_page($count, $size, 6, '', $page);
 		
@@ -75,9 +75,9 @@ class list_module extends api_admin implements api_interface
 		$result = array();
 		if (!empty($list)) {
 			foreach ($list as $row) {
-				$area_region_ids = RC_DB::table('merchants_region_info')->where('ra_id', $row['ra_id'])->lists('region_id');
+				$area_region_ids = RC_DB::connection(config('cashier.database_connection', 'default'))->table('merchants_region_info')->where('ra_id', $row['ra_id'])->lists('region_id');
 				if ($area_region_ids) {
-					$region_list = RC_DB::table('region')->whereIn('region_id', $area_region_ids)->select('region_id', 'region_name')->get();
+					$region_list = RC_DB::connection(config('cashier.database_connection', 'default'))->table('region')->whereIn('region_id', $area_region_ids)->select('region_id', 'region_name')->get();
 				}
 				$region_list = array_merge($region_list);
 				$row['area_id'] = $row['ra_id'];

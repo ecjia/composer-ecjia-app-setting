@@ -50,7 +50,7 @@ class Region
      */
     public function getProvinces() {
     	$country = $this->country;
-    	return RC_DB::table('regions')->where('parent_id', $country)->select('region_id', 'region_name')->get();
+    	return RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('parent_id', $country)->select('region_id', 'region_name')->get();
     }
     
     /**
@@ -59,7 +59,7 @@ class Region
      * @param string $regionId
      */
     public function getSubarea($regionId) {
-    	return RC_DB::table('regions')->where('parent_id', $regionId)->select('region_id', 'region_name', 'parent_id', 'region_type')->get();
+    	return RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('parent_id', $regionId)->select('region_id', 'region_name', 'parent_id', 'region_type')->get();
     }
     
     /**
@@ -68,7 +68,7 @@ class Region
      * @param string $regionId
      */
     public function getRegion($regionId) {
-        return RC_DB::table('regions')->where('region_id', $regionId)->select('region_id', 'region_name', 'parent_id', 'region_type')->first();
+        return RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_id', $regionId)->select('region_id', 'region_name', 'parent_id', 'region_type')->first();
     }
     
     /**
@@ -89,7 +89,7 @@ class Region
      * @param array $regionIds
      */
     public function getRegions(array $regionIds) {
-        return RC_DB::table('regions')->whereIn('region_id', $regionIds)->select('region_id', 'region_name', 'parent_id', 'region_type')->get();
+        return RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->whereIn('region_id', $regionIds)->select('region_id', 'region_name', 'parent_id', 'region_type')->get();
     }
     
     /**
@@ -99,7 +99,7 @@ class Region
      */
     public function getRegionsByType($type) {
         if ($type < 4) {
-            $result = RC_DB::table('regions')->where('region_type', $type)->select('region_id', 'region_name', 'parent_id', 'region_type')->get();
+            $result = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_type', $type)->select('region_id', 'region_name', 'parent_id', 'region_type')->get();
         } else {
             $result = [];
         }
@@ -116,9 +116,9 @@ class Region
      */
     public function getRegionsBySearch($name, $type = null) {
         if (is_null($type)) {
-            $result = RC_DB::table('regions')->where('region_name', 'like', '%'.ecjia_mysql_like_quote($name).'%')->get();
+            $result = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_name', 'like', '%'.ecjia_mysql_like_quote($name).'%')->get();
         } else {
-            $result = RC_DB::table('regions')->where('region_name', 'like', '%'.ecjia_mysql_like_quote($name).'%')->where('region_type', $type)->get();
+            $result = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_name', 'like', '%'.ecjia_mysql_like_quote($name).'%')->where('region_type', $type)->get();
         }
         return $result;
     }

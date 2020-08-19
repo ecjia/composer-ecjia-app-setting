@@ -56,7 +56,7 @@ class shop_config_module extends api_front implements api_interface
 
     	$regions = array ();
     	if (version_compare($api_version, '1.25', '>=')) {
-    		$regions = RC_DB::table('store_business_city')->select('business_city as id', 'business_city_alias as name')->get();
+    		$regions = RC_DB::connection(config('cashier.database_connection', 'default'))->table('store_business_city')->select('business_city as id', 'business_city_alias as name')->get();
     	} else {
     		$region_data = ecjia_region::getRegions($mobile_recommend_city);
     		if (!empty($region_data)) {

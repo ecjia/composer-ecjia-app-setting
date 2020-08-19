@@ -176,11 +176,11 @@ class ShopConfigController extends EcjiaAdminController
 		$this->admin_priv('shop_config', ecjia::MSGTYPE_JSON);
 
 		$arr  = array();
-		$data = RC_DB::table('shop_config')->select('id', 'value')->get();
+		$data = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->select('id', 'value')->get();
 
         $model = ecjia_config::getRepository()->getTableModel();
 
-		$stats_code_info = RC_DB::table('shop_config')->where('code', 'stats_code')->first();
+		$stats_code_info = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->where('code', 'stats_code')->first();
 		
 		foreach ($data as $row) {
 			$arr[$row['id']] = $row['value'];
@@ -193,13 +193,13 @@ class ShopConfigController extends EcjiaAdminController
 					'value' => $val,
 				);
 
-                RC_DB::table('shop_config')->where('id', $key)->update($data);
+                RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->where('id', $key)->update($data);
 			}
 		}
 		
 		/* 处理上传文件 */
 		$file_var_list = array();
-		$data = RC_DB::table('shop_config')->where('type', 'file')->where('parent_id', '>', 0)->get();
+		$data = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->where('type', 'file')->where('parent_id', '>', 0)->get();
 
 		foreach ($data as $row) {
 			$file_var_list[$row['code']] = $row;
@@ -246,7 +246,7 @@ class ShopConfigController extends EcjiaAdminController
 						'value'  => $file_name
 					);
 
-                    RC_DB::table('shop_config')->where('code', $code)->update($data);
+                    RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->where('code', $code)->update($data);
 				} else {
 					return $this->showmessage($upload->error(), ecjia::MSGTYPE_JSON | ecjia::MSGSTAT_ERROR);
 				}
