@@ -58,7 +58,7 @@ class region extends ecjia_admin {
 	public function init() {
 		
 		$parent_id	= $_GET['parent'];//上级区域编码
-		$arr['regions'] = with(new Ecjia\App\Setting\Region)->getSubarea($parent_id);//传参请求当前国家下信息
+		$arr['regions'] = with(new \Ecjia\App\Setting\Region)->getSubarea($parent_id);//传参请求当前国家下信息
 		$arr['target']  = stripslashes(trim($_GET['target']));
 		$arr['target']  = htmlspecialchars($arr['target']);
 		

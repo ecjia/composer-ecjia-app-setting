@@ -184,7 +184,7 @@ class shop_config_module extends api_front implements api_interface
         $data['wap_app_download_img'] = ecjia_config::has('wap_app_download_img') ? RC_Upload::upload_url() . '/' . ecjia::config('wap_app_download_img') : '';
         $data['shop_mobile_logo'] = ecjia_config::has('mobile_app_icon') ? RC_Upload::upload_url(ecjia::config('mobile_app_icon')) : '';
         
-        $client = Ecjia\App\Adsense\Client::H5;
+        $client = \Ecjia\App\Adsense\Client::H5;
         $cycleimageDatas = RC_Api::api('adsense',  'cycleimage', [
         		'code'     => 'home_cycleimage',
         		'client'   => $client,
