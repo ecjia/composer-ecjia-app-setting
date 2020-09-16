@@ -44,15 +44,16 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-defined('IN_ECJIA') or exit('No permission resources.');
+namespace Ecjia\App\Setting\Services;
 
 /**
  * 后台权限API
  * @author songqian
  */
-class setting_admin_purview_api extends Component_Event_Api {
+class SettingAdminPurviewService
+{
     
-    public function call(&$options) {
+    public function handle(&$options) {
         $purviews = array(
             array('action_name' => __('商店设置', 'setting'), 	'action_code' => 'shop_config', 	'relevance' => ''),
         	array('action_name' => __('地区设置', 'setting'), 	'action_code' => 'area_manage', 	'relevance' => ''),

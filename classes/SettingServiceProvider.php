@@ -46,6 +46,7 @@
 //
 namespace Ecjia\App\Setting;
 
+use RC_Service;
 use Royalcms\Component\App\AppParentServiceProvider;
 
 class SettingServiceProvider extends AppParentServiceProvider
@@ -67,7 +68,10 @@ class SettingServiceProvider extends AppParentServiceProvider
 	 */
 	public function register()
 	{
-	    $this->registerRegion();
+        RC_Service::addService('admin_purview', 'setting', \Ecjia\App\Setting\Services\SettingAdminPurviewService::class);
+        RC_Service::addService('setting_menu', 'setting', \Ecjia\App\Setting\Services\SettingSettingMenuService::class);
+
+        $this->registerRegion();
 	    
 	    $this->loadAlias();
 	}
