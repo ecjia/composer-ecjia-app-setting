@@ -50,7 +50,6 @@ namespace Ecjia\App\Setting\Controllers;
 use admin_nav_here;
 use ecjia;
 use Ecjia\App\Setting\AdminSettingAction;
-use Ecjia\System\BaseController\EcjiaAdminController;
 use ecjia_admin;
 use ecjia_config;
 use ecjia_screen;
@@ -67,17 +66,13 @@ use RC_Uri;
 /**
  * ECJIA 管理中心商店设置
  */
-class ShopConfigController extends EcjiaAdminController
+class ShopConfigController extends AdminBase
 {
-
-    private $__FILE__;
 
 	public function __construct()
     {
 		parent::__construct();
 
-        $this->__FILE__ = dirname(dirname(__FILE__));
-		
 		RC_Package::package('app::setting')->loadClass('ecjia_admin_setting', false);
 		
 		RC_Script::enqueue_script('admin_shop_config', RC_App::apps_url('statics/js/admin_shop_config.js', $this->__FILE__), array(), false, 1);

@@ -18,7 +18,7 @@ use RC_Style;
 use RC_Time;
 use RC_Uri;
 
-class AdminRegionController extends EcjiaAdminController
+class AdminRegionController extends AdminBase
 {
     public function __construct()
     {
@@ -33,9 +33,9 @@ class AdminRegionController extends EcjiaAdminController
         RC_Style::enqueue_style('uniform-aristo');
         RC_Script::enqueue_script('jquery-uniform');
         RC_Script::enqueue_script('jquery-chosen');
-        RC_Script::enqueue_script('admin_region_manage', RC_App::apps_url('statics/js/admin_region_manage.js', __FILE__), array(), false, 1);
+        RC_Script::enqueue_script('admin_region_manage', RC_App::apps_url('statics/js/admin_region_manage.js', $this->__FILE__), array(), false, 1);
         RC_Script::localize_script('admin_region_manage', 'js_lang_admin_region_manage', config('app-setting::jslang.admin_region_manage'));
-        RC_Script::enqueue_script('setting', RC_App::apps_url('statics/js/setting.js', __FILE__), array(), false, 1);
+        RC_Script::enqueue_script('setting', RC_App::apps_url('statics/js/setting.js', $this->__FILE__), array(), false, 1);
         RC_Script::localize_script('setting', 'js_lang_setting', config('app-setting::jslang.admin_region_page'));
     }
 

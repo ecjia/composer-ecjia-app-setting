@@ -44,26 +44,31 @@
 //
 //  ---------------------------------------------------------------------------------
 //
-defined('IN_ECJIA') or exit('No permission resources.');
+namespace Ecjia\App\Setting\Controllers;
+
+use Ecjia\System\BaseController\EcjiaAdminController;
 
 /**
  * ECJIA 地区切换程序
  */
-class region extends ecjia_admin {
-	
-	public function __construct() {
-		parent::__construct();
-	}
-	
-	public function init() {
-		
-		$parent_id	= $_GET['parent'];//上级区域编码
-		$arr['regions'] = with(new \Ecjia\App\Setting\Region)->getSubarea($parent_id);//传参请求当前国家下信息
-		$arr['target']  = stripslashes(trim($_GET['target']));
-		$arr['target']  = htmlspecialchars($arr['target']);
-		
-		echo json_encode($arr);
-	}
+class region extends AdminBase
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function init()
+    {
+
+        $parent_id      = $_GET['parent'];                                            //上级区域编码
+        $arr['regions'] = with(new \Ecjia\App\Setting\Region)->getSubarea($parent_id);//传参请求当前国家下信息
+        $arr['target']  = stripslashes(trim($_GET['target']));
+        $arr['target']  = htmlspecialchars($arr['target']);
+
+        echo json_encode($arr);
+    }
 }
 
 // end
