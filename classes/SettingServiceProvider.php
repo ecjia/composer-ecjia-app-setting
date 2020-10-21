@@ -70,43 +70,7 @@ class SettingServiceProvider extends AppParentServiceProvider
 	{
         RC_Service::addService('admin_purview', 'setting', \Ecjia\App\Setting\Services\SettingAdminPurviewService::class);
         RC_Service::addService('setting_menu', 'setting', \Ecjia\App\Setting\Services\SettingSettingMenuService::class);
-
-        $this->registerRegion();
-	    
-	    $this->loadAlias();
-	}
-	
-	/**
-	 * Register the region
-	 * @return \Ecjia\App\Setting\Region
-	 */
-	public function registerRegion() 
-	{
-	    $this->royalcms->singleton('ecjia.region', function($royalcms){
-	    	return new Region();
-	    });
-	}
-	
-	/**
-	 * Load the alias = One less install step for the user
-	 */
-	protected function loadAlias()
-	{
-        $loader = \Royalcms\Component\Foundation\AliasLoader::getInstance();
-
-        foreach (self::aliases() as $class => $alias) {
-            $loader->alias($class, $alias);
-        }
 	}
 
-    /**
-     * Load the alias = One less install step for the user
-     */
-    public static function aliases()
-    {
-        return [
-            'ecjia_region' => 'Ecjia\App\Setting\Facades\Region'
-        ];
-    }
 	
 }

@@ -6,6 +6,7 @@ namespace Ecjia\App\Setting\Subscribers;
 
 use ecjia;
 use Ecjia\App\Setting\ShopConfigMenu;
+use Ecjia\Component\Region\Country;
 use ecjia_admin;
 use ecjia_config;
 use RC_Package;
@@ -47,7 +48,7 @@ class AdminHookSubscriber
 
     public function onFormConfigRegionSelectAction($item)
     {
-        $countries = with(new \Ecjia\App\Setting\Country)->getCountries();
+        $countries = with(new Country)->getCountries();
 
         ecjia_admin::$controller->assign('countries', $countries);
         ecjia_admin::$controller->assign('var', $item);
