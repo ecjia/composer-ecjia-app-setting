@@ -46,12 +46,12 @@
 //
 namespace Ecjia\App\Setting\Controllers;
 
-use Ecjia\System\BaseController\EcjiaAdminController;
+use ecjia_region;
 
 /**
  * ECJIA 地区切换程序
  */
-class region extends AdminBase
+class RegionController extends AdminBase
 {
 
     public function __construct()
@@ -61,13 +61,12 @@ class region extends AdminBase
 
     public function init()
     {
-
-        $parent_id      = $_GET['parent'];                                            //上级区域编码
-        $arr['regions'] = with(new \Ecjia\App\Setting\Region)->getSubarea($parent_id);//传参请求当前国家下信息
+        $parent_id      = $_GET['parent'];                          //上级区域编码
+        $arr['regions'] = ecjia_region::getSubarea($parent_id);     //传参请求当前国家下信息
         $arr['target']  = stripslashes(trim($_GET['target']));
         $arr['target']  = htmlspecialchars($arr['target']);
 
-        echo json_encode($arr);
+        return $this->displayContent(json_encode($arr));
     }
 }
 
