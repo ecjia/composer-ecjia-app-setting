@@ -5,10 +5,12 @@ namespace Ecjia\App\Setting\Subscribers;
 
 
 use ecjia;
+use Ecjia\App\Setting\AdminSettingAction;
 use Ecjia\App\Setting\ShopConfigMenu;
 use Ecjia\Component\Region\Country;
 use ecjia_admin;
 use ecjia_config;
+use ecjia_region;
 use RC_Package;
 use Royalcms\Component\Hook\Dispatcher;
 
@@ -54,10 +56,10 @@ class AdminHookSubscriber
         ecjia_admin::$controller->assign('var', $item);
         $shop_country = ecjia::config('shop_country');
         if (!empty($shop_country)) {
-            ecjia_admin::$controller->assign('provinces', with(new \Ecjia\App\Setting\Region)->getSubarea(ecjia::config('shop_country')));
+            ecjia_admin::$controller->assign('provinces', ecjia_region::getSubarea(ecjia::config('shop_country')));
             $shop_province = ecjia::config('shop_province');
             if ($shop_province) {
-                ecjia_admin::$controller->assign('cities', with(new \Ecjia\App\Setting\Region)->getSubarea(ecjia::config('shop_province')));
+                ecjia_admin::$controller->assign('cities', ecjia_region::getSubarea(ecjia::config('shop_province')));
             }
         }
 
@@ -70,7 +72,7 @@ class AdminHookSubscriber
     public function onFormConfigLangSelectAction($item)
     {
         /* 可选语言 */
-        ecjia_admin::$controller->assign('lang_list', \Ecjia\App\Setting\AdminSettingAction::getSelectLangs());
+        ecjia_admin::$controller->assign('lang_list', AdminSettingAction::getSelectLangs());
         ecjia_admin::$controller->assign('var', $item);
 
         echo ecjia_admin::$controller->fetch(
