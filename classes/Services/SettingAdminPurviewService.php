@@ -56,8 +56,9 @@ class SettingAdminPurviewService
     public function handle(&$options) {
         $purviews = array(
             array('action_name' => __('商店设置', 'setting'), 	'action_code' => 'shop_config', 	'relevance' => ''),
-        	array('action_name' => __('地区设置', 'setting'), 	'action_code' => 'area_manage', 	'relevance' => ''),
-        	array('action_name' => __('地区管理', 'setting'), 'action_code' => 'region_manage', 	'relevance' => ''),
+        	array('action_name' => __('验证码管理', 'setting'), 	'action_code' => 'captcha_manage', 	'relevance' => ''),
+//         	array('action_name' => __('地区设置', 'setting'), 	'action_code' => 'area_manage', 	'relevance' => ''),
+//         	array('action_name' => __('地区管理', 'setting'), 'action_code' => 'region_manage', 	'relevance' => ''),
         );
         return $purviews;
     }
