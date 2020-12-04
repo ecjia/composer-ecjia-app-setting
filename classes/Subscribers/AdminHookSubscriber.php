@@ -131,7 +131,7 @@ class AdminHookSubscriber
 
     public function onAddMaintainCommandFilter($factories)
     {
-        $factories['setting_shop_config_sequence'] = 'Ecjia\App\Setting\Maintains\SettingShopConfigSequence';
+//        $factories['setting_shop_config_sequence'] = 'Ecjia\App\Setting\Maintains\SettingShopConfigSequence';
         $factories['setting_shop_config_seeder'] = 'Ecjia\App\Setting\Maintains\SettingShopConfigSeeder';
 
         return $factories;
