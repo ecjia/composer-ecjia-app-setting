@@ -80,7 +80,7 @@ class SettingItems extends RC_Object
         $item_list = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')
             ->where('parent_id', $parent_id)
             ->where('type', '<>', 'hidden')
-            ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
+            ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get()->toArray();
 
         return $item_list;
     }

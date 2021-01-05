@@ -171,7 +171,10 @@ class ShopConfigController extends AdminBase
 		$this->admin_priv('shop_config', ecjia::MSGTYPE_JSON);
 
 		$arr  = array();
-		$data = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->select('id', 'value')->get();
+		$data = RC_DB::connection(config('cashier.database_connection', 'default'))
+                    ->table('shop_config')
+                    ->select('id', 'value')
+                    ->get()->toArray();
 
         $model = ecjia_config::getRepository()->getTableModel();
 
@@ -194,7 +197,11 @@ class ShopConfigController extends AdminBase
 		
 		/* 处理上传文件 */
 		$file_var_list = array();
-		$data = RC_DB::connection(config('cashier.database_connection', 'default'))->table('shop_config')->where('type', 'file')->where('parent_id', '>', 0)->get();
+		$data = RC_DB::connection(config('cashier.database_connection', 'default'))
+                    ->table('shop_config')
+                    ->where('type', 'file')
+                    ->where('parent_id', '>', 0)
+                    ->get()->toArray();
 
 		foreach ($data as $row) {
 			$file_var_list[$row['code']] = $row;

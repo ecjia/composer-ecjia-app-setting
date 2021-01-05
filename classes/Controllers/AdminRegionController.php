@@ -61,7 +61,10 @@ class AdminRegionController extends AdminBase
 
         $id = isset($_GET['id']) ? trim($_GET['id']) : 'CN';
 
-        $region_arr = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('parent_id', $id)->get();
+        $region_arr = RC_DB::connection(config('cashier.database_connection', 'default'))
+                            ->table('regions')
+                            ->where('parent_id', $id)
+                            ->get()->toArray();
 
         if ($id != 'CN') {
             $p_info = RC_DB::connection(config('cashier.database_connection', 'default'))->table('regions')->where('region_id', $id)->first();
