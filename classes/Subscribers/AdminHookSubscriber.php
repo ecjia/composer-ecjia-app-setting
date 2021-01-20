@@ -129,13 +129,13 @@ class AdminHookSubscriber
     }
 
 
-    public function onAddMaintainCommandFilter($factories)
-    {
-//        $factories['setting_shop_config_sequence'] = 'Ecjia\App\Setting\Maintains\SettingShopConfigSequence';
-        $factories['setting_shop_config_seeder'] = 'Ecjia\App\Setting\Maintains\SettingShopConfigSeeder';
-
-        return $factories;
-    }
+//    public function onAddMaintainCommandFilter($factories)
+//    {
+////        $factories['setting_shop_config_sequence'] = 'Ecjia\App\Setting\Maintains\SettingShopConfigSequence';
+//        $factories['setting_shop_config_seeder'] = 'Ecjia\App\Setting\Maintains\SettingShopConfigSeeder';
+//
+//        return $factories;
+//    }
 
 
     /**
@@ -186,10 +186,10 @@ class AdminHookSubscriber
             10,
             2
         );
-        $events->addFilter(
-            'ecjia_maintain_command_filter',
-            'Ecjia\App\Setting\Subscribers\AdminHookSubscriber@onAddMaintainCommandFilter'
-        );
+//        $events->addFilter(
+//            'ecjia_maintain_command_filter',
+//            'Ecjia\App\Setting\Subscribers\AdminHookSubscriber@onAddMaintainCommandFilter'
+//        );
 
     }
 
