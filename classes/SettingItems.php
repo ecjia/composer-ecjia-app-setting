@@ -139,6 +139,23 @@ class SettingItems extends RC_Object
         }
     }
 
+    /**
+     * @param $gorup
+     * @return mixed|\Royalcms\Component\Support\Collection
+     */
+    public function getFirstSettingComponentGroup()
+    {
+        try {
+            $handlers = (new ComponentFactory(new ComponentNamespace()))->getComponents();
+
+            return array_first($handlers);
+        }
+        catch (\InvalidArgumentException $e) {
+            ecjia_log_error($e->getMessage(), $e);
+            return null;
+        }
+    }
+
     public function getSettingItemConfig($code, $configs)
     {
         $config = $configs->where('cfg_code', $code)->first();
