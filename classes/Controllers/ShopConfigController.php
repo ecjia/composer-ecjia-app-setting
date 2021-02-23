@@ -116,6 +116,11 @@ class ShopConfigController extends AdminBase
 		);
 		
 		$code = trim($_GET['code']);
+
+		if (empty($code)) {
+            $group_handler = \Ecjia\App\Setting\SettingItems::singleton()->getFirstSettingComponentGroup();
+            $code = $group_handler->getCode();
+        }
 		
 		switch ($code) {
 			case 'basic':
@@ -141,14 +146,7 @@ class ShopConfigController extends AdminBase
 			    break;
 		}
 
-        $this->assign('ur_here', __('商店设置', 'setting'));
-
-		$this->assign('cfg_range_lang', \Ecjia\App\Setting\SettingItems::singleton()->getSettingRangesByGroup($code));
-		
 		$item_list = \Ecjia\App\Setting\SettingItems::singleton()->getItems($code);
-
-		$this->assign('item_list',      $item_list);
-		$this->assign('current_code',   $code);
 
         $group_handler = \Ecjia\App\Setting\SettingItems::singleton()->getSettingComponentGroup($code);
         if ($group_handler) {
@@ -157,7 +155,11 @@ class ShopConfigController extends AdminBase
                 'name' => $group_handler->getName()
             ));
         }
-        
+
+        $this->assign('ur_here', __('商店设置', 'setting'));
+        $this->assign('cfg_range_lang', \Ecjia\App\Setting\SettingItems::singleton()->getSettingRangesByGroup($code));
+        $this->assign('item_list',      $item_list);
+        $this->assign('current_code',   $code);
 		$this->assign('form_action', RC_Uri::url('setting/shop_config/update'));
 
         return $this->display('setting.dwt');
